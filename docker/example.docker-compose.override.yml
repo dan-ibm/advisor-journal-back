@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+  postgres:
+    environment:
+      POSTGRES_DB: db_name
+    ports:
+      - "5432:5432"
+  adminer:
+    ports:
+      - "8080:8080"
