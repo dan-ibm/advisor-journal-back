@@ -52,6 +52,9 @@ class LoginController extends Controller
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
+            'surname' => 'required|string|between:2,100',
+            'patronymic' => 'nullable|string|between:2,100',
+            'phone' => 'required|integer',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
