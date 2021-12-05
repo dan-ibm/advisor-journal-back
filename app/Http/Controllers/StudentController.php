@@ -6,12 +6,25 @@ use App\Http\Requests\StoreStudentRequest;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\User;
+use App\Services\CacheService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class StudentController extends Controller
 {
+
+    private $redis;
+    private $cacheService;
+
+
+    public function __construct()
+    {
+        $this->redis = Redis::connection();
+        $this->cacheService = new CacheService();
+    }
+
     public function index(Request $request): JsonResponse
     {
         $students = Student::active()->get();
@@ -37,7 +50,8 @@ class StudentController extends Controller
         }
 
 
-        return response()->json(['data' => array_slice($fullData, $request->from ?? 0, $request->to ?? 10), 'total' => count($fullData)]);
+        return response()->json(['data' => array_slice($fullData, $request->from ?? 0, $request->to ?? 10),
+            'total' => count($fullData)]);
     }
 
     public function create(StoreStudentRequest $request): JsonResponse
@@ -62,5 +76,19 @@ class StudentController extends Controller
         }
 
         return response()->json(['success' => $msg], 201);
+    }
+
+    public function writeCache()
+    {
+        $this->cacheService->writeCache();
+        return response("Ok", 201);
+    }
+
+    public function testCache()
+    {
+        $this->redis->select(1);
+        $res = $this->redis->get('test_key_check');
+
+        return json_decode($res);
     }
 }

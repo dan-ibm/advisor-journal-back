@@ -45,3 +45,9 @@ Route::group(['prefix' => 'students'], function ($router) {
     Route::get('', [StudentController::class, 'index']);
     Route::post('create', [StudentController::class, 'create']);
 });
+
+Route::get('cache-write', [StudentController::class, 'writeCache']);
+Route::get('cache-test', [StudentController::class, 'testCache']);
+
+
+

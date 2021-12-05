@@ -26,6 +26,8 @@ services:
       POSTGRES_PASS: docker
       REPLICATION: 'true'
       WAL_LEVEL: 'logical'
+  redis:
+    image: redis:alpine
   adminer:
     image: adminer
     environment:
