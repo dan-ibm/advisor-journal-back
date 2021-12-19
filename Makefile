@@ -82,3 +82,7 @@ mongo-express:
 .PHONY: elasticsearch
 elasticsearch:
 	${docker} exec elasticsearch bash -l
+
+.PHONY: tests
+tests:
+	${docker} exec php-fpm php artisan test

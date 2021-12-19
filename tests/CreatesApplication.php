@@ -19,4 +19,13 @@ trait CreatesApplication
 
         return $app;
     }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+//        $this->artisan('config:cache');
+//        $this->artisan('migrate:fresh --seed');
+    }
+
 }
